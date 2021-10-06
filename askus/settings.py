@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig', #This object was created for us in /users/apps.py
-    'rest_framework'
+    'rest_framework',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
