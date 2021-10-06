@@ -11,10 +11,10 @@ class Question(models.Model):
 
     def __str__(self):
         return "\n".join([
-            f"[{title}]: {date_posted}",
-            f"{description}",
-            f"answers: {no_of_answers}",
-            f"upvotes: {no_of_upvotes}",
+            f"[{self.title}]: {self.date_posted}",
+            f"{self.description}",
+            f"answers: {self.no_of_answers}",
+            f"upvotes: {self.no_of_upvotes}",
         ])
 
 class Answer(models.Model):
@@ -27,7 +27,7 @@ class Answer(models.Model):
 
     def __str__(self):
         return "\n".join([
-            f"{answer_text}",
-            f"upvotes: {no_of_upvotes}",
-            f"downvotes: {no_of_downvotes}"
+            f"{self.answer_text}",
+            f"upvotes: {self.no_of_upvotes}",
+            f"downvotes: {self.no_of_downvotes}"
         ])
