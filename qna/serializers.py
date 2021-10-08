@@ -7,7 +7,9 @@ class QuestionSerializer(ModelSerializer):
         model = Question
         fields = "__all__"
 
+
 class AnswerSerializer(ModelSerializer):
     class Meta:
         model = Answer
         fields = "__all__"
+
