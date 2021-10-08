@@ -12,7 +12,6 @@ class Question(models.Model):
     def __str__(self):
         return f'#{self.id}: ' + self.title
 
-
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(auto_now_add=True)
