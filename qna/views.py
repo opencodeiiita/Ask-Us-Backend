@@ -48,14 +48,9 @@ def question_detail(request, **kwargs):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET', 'POST'])
-def answer_detail(request, **kwargs):
-     _id = kwargs.get("id")
-    try:
-        answer = Answer.objects.get(id=_id)
-    except Answer.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+def answer_list(request):
     if request.method == 'GET':
-        data = AnswerSerializer(answer).data
+        data = AnswerSerializer(Answer.objects.all(), many=True).data
         return Response(data)
     elif request.method == 'POST':
         serializer = AnswerSerializer(data=request.data)
