@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from qna.models import Question
 from qna.models import Answer
 from qna.serializers import QuestionSerializer
+from qna.serializers import AnswerSerializer
 
 @api_view(['GET', 'POST'])
 def question_list(request):
