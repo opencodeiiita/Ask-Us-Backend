@@ -20,5 +20,5 @@ from qna import views
 
 urlpatterns = [
     path('<int:id>/', views.question_detail),
-
+    path('', views.question_list),
 ]
