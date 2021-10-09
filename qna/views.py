@@ -8,7 +8,20 @@ from rest_framework.response import Response
 from qna.models import Question
 from qna.serializers import QuestionSerializer
 
+@api_view(['GET', 'POST'])
+def question_list(request):
+    if request.method == 'GET':
+        questions = Question.objects.all()
+        serializer = QuestionSerializer(questions, many=True)
+        return Response(serializer.data)
 
+    elif request.method == 'POST':
+        serializer = QuestionSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 @api_view(['GET', 'PUT', 'DELETE'])
 def question_detail(request, **kwargs):
     _id = kwargs.get("id")
