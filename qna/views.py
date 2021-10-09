@@ -24,7 +24,6 @@ def question_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def question_detail(request, **kwargs):
-
     _id = kwargs.get("id")
     try:
         question = Question.objects.get(id=_id)
@@ -47,7 +46,7 @@ def question_detail(request, **kwargs):
 
 
 @api_view(['GET', 'POST'])
-def answer_list(request):
+def answer_list(request, **kwargs):
     if request.method == 'GET':
         data = AnswerSerializer(Answer.objects.all(), many=True).data
         return Response(data)
