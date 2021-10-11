@@ -17,12 +17,17 @@ def root(request):
         {
         "request": "GET,PUT,DELETE",
         "url": "question/{qid}",
-        "description": "Get, edt ,delete a question with its id"
+        "description": "Get, edit ,delete a question with its id"
         },
         {
         "request": "GET,POST",
         "url": "question/{qid}/answer",
         "description": "Get, post answer for a question with its id"
+        },
+        {
+        "request": "GET,PUT,DELETE",
+        "url": "question/{qid}/answer/{aid}",
+        "description": "Get, edit ,delete answer with its id for a question with its id"
         },
     ]
     return Response(endpoints,status=status.HTTP_200_OK)
