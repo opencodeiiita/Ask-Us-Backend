@@ -36,7 +36,6 @@ def question_list(request):
         questions = Question.objects.all()
         serializer = QuestionSerializer(questions, many=True)
         return Response(serializer.data)
-
     elif request.method == 'POST':
         serializer = QuestionSerializer(data=request.data)
         if serializer.is_valid():
@@ -52,7 +51,6 @@ def question_detail(request, **kwargs):
         question = Question.objects.get(id=_id)
     except Question.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
     if request.method == 'GET':
         data = QuestionSerializer(question).data
         return Response(data)
@@ -81,5 +79,27 @@ def answer_list(request, **kwargs):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+@api_view(['GET', 'PUT', 'DELETE'])
+def answer_detail(request, **kwargs):
+    _id = kwargs.get("aid")
+    _qid = kwargs.get("qid")
+    try:
+        answer = Answer.objects.get(id=_id)
+    except Answer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        ser =  AnswerSerializer(answer)
+        return Response(ser.data)
+    elif request.method == "PUT":
+        request.data["question"]=_qid
+        ans_ser = AnswerSerializer(answer, data=request.data)
+        if ans_ser.is_valid():
+            ans_ser.save()
+            return Response(ans_ser.data, status=status.HTTP_200_OK)
+        return Response(ans_ser.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "DELETE":
+        answer.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
