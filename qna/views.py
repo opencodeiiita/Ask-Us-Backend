@@ -6,6 +6,29 @@ from rest_framework.response import Response
 from qna.models import Question, Answer
 from qna.serializers import QuestionSerializer, AnswerSerializer
 
+@api_view(['GET'])
+def root(request):
+    endpoints = [
+        {
+        "request": "GET,POST",
+        "url": "question/",
+        "description": "Retrive all questions, post a question"
+        },
+        {
+        "request": "GET,PUT,DELETE",
+        "url": "question/{qid}",
+        "description": "Get, edt ,delete a question with its id"
+        },
+        {
+        "request": "GET,POST",
+        "url": "question/{qid}/answer",
+        "description": "Get, post answer for a question with its id"
+        },
+    ]
+    return Response(endpoints,status=status.HTTP_200_OK)
+        
+        
+        
 
 @api_view(['GET', 'POST'])
 def question_list(request):
@@ -47,8 +70,7 @@ def question_detail(request, **kwargs):
 def answer_list(request, **kwargs):
     _id = kwargs.get("id")
     if request.method == 'GET':
-        vat= Answer.objects.all().filter(question=_id)
-        data = AnswerSerializer(vat.all(), many=True).data
+        data = AnswerSerializer(Answer.objects.all().filter(question = _id), many=True).data
         return Response(data)
     elif request.method == 'POST':
         request.data["question"]=_id
