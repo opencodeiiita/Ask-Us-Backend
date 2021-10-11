@@ -11,19 +11,19 @@ def root(request):
     endpoints = [
         {
         "request": "GET,POST",
-        "url": "questions/",
+        "url": "question/",
         "description": "Retrive all questions, post a question"
         },
         {
         "request": "GET,PUT,DELETE",
-        "url": "questions/:id",
+        "url": "question/{qid}",
         "description": "Get, edt ,delete a question with its id"
         },
         {
         "request": "GET,POST",
-        "url": "answers/",
-        "description": "Get and post a answer"
-        }
+        "url": "question/{qid}/answer",
+        "description": "Get, post answer for a question with its id"
+        },
     ]
     return Response(endpoints,status=status.HTTP_200_OK)
         
