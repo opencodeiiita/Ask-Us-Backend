@@ -47,10 +47,12 @@ def question_detail(request, **kwargs):
 
 @api_view(['GET', 'POST'])
 def answer_list(request, **kwargs):
+    _id = kwargs.get("id")
     if request.method == 'GET':
         data = AnswerSerializer(Answer.objects.all(), many=True).data
         return Response(data)
     elif request.method == 'POST':
+        request.data["question"]=_id
         serializer = AnswerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
