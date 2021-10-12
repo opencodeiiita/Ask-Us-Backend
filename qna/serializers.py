@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Answer, Question,User
+from .models import Answer, Question
+from django.contrib.auth.models import User
 
 
 class QuestionSerializer(ModelSerializer):
