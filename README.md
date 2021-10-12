@@ -46,8 +46,8 @@ To set-up the development environment on your local machine, follow the below st
 ### Running Migrations 
 
 - Run the command:  `python manage.py makemigrations`.
-- Run the command:  `python manage.py makemigrations <app name>` when you want to make migrations for a particular model.
--Run the command:  `python manage.py migrate` to check if changes you have made have been stored as migrations.
+- Run the command:  `python manage.py makemigrations <app name>` when you want to create migrations for a particular app.
+- Run the command:  `python manage.py migrate` to apply migrations and create database tables.
 - Linux/macOS users,instead of using `python` in commands, use `python3`.
 
 ### Creating a Super User for Admin Site
