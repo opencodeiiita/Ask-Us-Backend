@@ -49,7 +49,7 @@ def question_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def question_detail(request, **kwargs):
     _id = kwargs.get("id")
     try:
@@ -65,6 +65,13 @@ def question_detail(request, **kwargs):
         if ques_serializer.is_valid():
             ques_serializer.save()
             return Response(ques_serializer.data, status=status.HTTP_200_OK)
+        return Response(ques_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "PATCH":
+        data = request.data
+        ques_serializer = QuestionSerializer(question, data=data, partial=True)
+        if ques_serializer.is_valid():
+            ques_serializer.save()
+            return Response(ques_serializer.data,status=status.HTTP_200_OK)
         return Response(ques_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == "DELETE":
         question.delete()
@@ -85,7 +92,7 @@ def answer_list(request, **kwargs):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def answer_detail(request, **kwargs):
     _id = kwargs.get("aid")
     _qid = kwargs.get("qid")
@@ -103,6 +110,13 @@ def answer_detail(request, **kwargs):
             ans_ser.save()
             return Response(ans_ser.data, status=status.HTTP_200_OK)
         return Response(ans_ser.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == "PATCH":
+        data = request.data
+        ans_serializer = AnswerSerializer(answer, data=data, partial=True)
+        if ans_serializer.is_valid():
+            ans_serializer.save()
+            return Response(ans_serializer.data,status=status.HTTP_200_OK)
+        return Response(ans_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == "DELETE":
         answer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
