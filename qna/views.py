@@ -89,6 +89,9 @@ def answer_list(request, **kwargs):
         serializer = AnswerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            question = Question.objects.get(id=_id)
+            question.no_of_answers += 1  
+            question.save() 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
