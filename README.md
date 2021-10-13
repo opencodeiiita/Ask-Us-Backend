@@ -43,6 +43,19 @@ To set-up the development environment on your local machine, follow the below st
 - Other steps are same as in Windows.
 
 ---
+### Running Migrations 
+
+- Run the command:  `python manage.py makemigrations`.
+- Run the command:  `python manage.py makemigrations <app name>` when you want to create migrations for a particular app.
+- Run the command:  `python manage.py migrate` to apply migrations and create database tables.
+- Linux/macOS users,instead of using `python` in commands, use `python3`.
+
+### Creating a Super User for Admin Site
+
+- Create a user by running command:  `python manage.py createsuperuser`.
+- Enter desired username and email-address after that.
+- Enter a password for the the admin site.
+  To access the admin site, run the server, open a browser, and go to: `https://localhost:8000/admin/` and enter your username and password there.
 
 Once django is installed successfully and working, it's time to install the **django-REST framework**. This is the key tool for building the APIs. So, open the terminal (cmd on windows) and activate the virtual environment. Now install the REST framework with the following command: `pip install djangorestframework`
 
