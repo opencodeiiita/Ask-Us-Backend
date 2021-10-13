@@ -1,40 +1,40 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from .models import Answer, Question
 
 
-class QuestionSerializer(ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = "__all__"
 
 
-class AnswerSerializer(ModelSerializer):
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = "__all__"
 
-class RegisterSerializer(ModelSerializer):
-    email = ModelSerializer.CharField(required = True)
-    password = ModelSerializer.CharField(required = True,Write_only = True)
-    password2 = ModelSerializer.Field(required = True,Write_only = True)
+class RegisterSerializer(serializers.ModelSerializer):
+    email = serializers.CharField(required = True)
+    password = serializers.CharField(required = True,write_only = True)
+    password2 = serializers.CharField(required = True,write_only = True)
 
-        class Meta:
-            model = User
-            fields = ['id','username','password','password2','email','first_name','last_name']
+    class Meta:
+        model = User
+        fields = ['id','username','password','password2','email','first_name','last_name']
 
     def create(self,validated_data):
-         user = User.objects.create_user(
+        user = User.objects.create_user(
                 username=validated_data['username'],
                 password=validated_data['password'],
                 email = validated_data['email']
             )
-    return user
+        return user
 
        
 
     def validate(self,data):
-        password = self.validated_data['password']
-        password2 = self.validated_data['password2']
+        password = data['password']
+        password2 = data['password2']
         if password != password2:
             raise serializers.ValidationError({'password':'passwords must match'})
-    return data
+        return data
