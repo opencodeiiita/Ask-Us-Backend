@@ -4,5 +4,5 @@ from django.urls import path, include
 from users import views
 
 urlpatterns = [
-    path('register/', UserRegisterView.as_view()),
+    path('register/', views.UserRegisterView.as_view()),
 ]
