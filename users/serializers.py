@@ -10,7 +10,7 @@ class UserSerializer(ModelSerializer):
         fields = ("id", "username", "email", "first_name", "last_name")
 
 class RegisterSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required = True)
+    email = serializers.EmailField(required = True,validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(required = True,write_only = True)
     password2 = serializers.CharField(required = True,write_only = True)
 
@@ -33,9 +33,3 @@ class RegisterSerializer(serializers.ModelSerializer):
         if password != password2:
             raise serializers.ValidationError({'password':'passwords must match'})
         return data
-
-    def validate_email(self,data):
-        email_lower = data['email'].lower()
-        if User.objects.filter(email__iexact=email_lower).exists():
-            raise serializers.ValidationError({'email':'Email already exists'})
-        return email_lower
