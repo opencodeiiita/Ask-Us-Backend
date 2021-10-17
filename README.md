@@ -72,9 +72,9 @@ To set-up the development environment on your local machine, follow the below st
  eg.  ` http http://localhost:8000/question/ id==1 `
         (You can use multiple query parameters too)
   - Post information on the server :  `http POST http://localhost:8000/` followed by the end point where you want to post the information(You will have to specify all the required fields for the particular model )
- eg. ` http POST http://localhost:8000/question/ title=Question1 desciption=This is the 1st question `
+ eg. ` http POST http://localhost:8000/question/ title="Question1" desciption="This is the 1st question" `
   - Put information on the server :  `http PUT http://localhost:8000/` followed by the end point where you want to put the information
-eg.` http PUT http://localhost:8000/question/2/ title=Question2 description='This is the 2nd question' `
+eg.` http PUT http://localhost:8000/question/2/ title="Question2" description="This is the 2nd question" `
   -Delete information from the server: `http DELETE http://localhost:8000/` followed by the end point fromwhere you want to delete the information
   eg.` http DELETE http://localhost:8000/question/1/ `
    
