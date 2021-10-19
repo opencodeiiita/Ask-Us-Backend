@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import permissions
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.permissions import AllowAny
 from users.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
