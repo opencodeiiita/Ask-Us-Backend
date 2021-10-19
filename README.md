@@ -70,7 +70,7 @@ One of the main advantages of using the HTTPie's command line interface is that 
 
 ### Installation
 - Mac:     `pip install --upgrade httpie`
-- Windows: `pip install --upgrade pip setuptools`
+- Windows: `pip install --upgrade pip setuptools`  
            `pip install --upgrade httpie`
 - Linux:   `apt-get install httpie`
 
@@ -83,5 +83,5 @@ One of the main advantages of using the HTTPie's command line interface is that 
   eg. ` http POST http://localhost:8000/question/ title="Question1" desciption="This is the 1st question" `
 - Put information on the server :  `http PUT http://localhost:8000/` followed by the end point where you want to put the information
   eg.` http PUT http://localhost:8000/question/2/ title="Question2" description="This is the 2nd question" `
--Delete information from the server: `http DELETE http://localhost:8000/` followed by the end point fromwhere you want to delete the information
+- Delete information from the server: `http DELETE http://localhost:8000/` followed by the end point fromwhere you want to delete the information
   eg.` http DELETE http://localhost:8000/question/1/ `
