@@ -1,6 +1,5 @@
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth.models import User
-from rest_framework import permissions
 from rest_framework.permissions import AllowAny
 from users.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
