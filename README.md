@@ -67,12 +67,14 @@ Now you have the required tools to start contributing! Enjoy! :)
 ## HTTPie command line tool
 HTTPie is a command line tool used to interact with HTTP clients. It makes interacting  with the APIs easier as it can be used directly from your terminal. It can be used to test the API and has several methods like GET,POST,PUT and DELETE.
 One of the main advantages of using the HTTPie's command line interface is that it allows the user the ability to pass a Token as the Authentication Header which isn't possible in the browser interface.
+
 ### Installation
-Mac:           `pip install --upgrade httpie`
-Windows: `pip install --upgrade pip setuptools`
-         `pip install --upgrade httpie`
-Linux: `apt-get install httpie`
-  
+- Mac:     `pip install --upgrade httpie`
+- Windows: `pip install --upgrade pip setuptools`
+           `pip install --upgrade httpie`
+- Linux:   `apt-get install httpie`
+
+### Usage
 - Get information from the server :  `http GET http://localhost:8000/` followed by the end point from where you want to get the information. 
   eg.  ` http GET http://localhost:8000/question `
 - Get information for a query parameter by using param==value format in original request.
