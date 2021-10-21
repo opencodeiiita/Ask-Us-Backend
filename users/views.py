@@ -1,4 +1,6 @@
 from rest_framework.generics import CreateAPIView
+from rest_framework.generics import APIView
+from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
 from users.serializers import RegisterSerializer
@@ -19,3 +21,8 @@ class UserRegisterView(CreateAPIView):
         data["token"]=Token.objects.get(user=data["id"]).key
         return Response(data,status=status.HTTP_201_CREATED, headers=headers)
 
+class UserLogoutView(APIView):
+    def get(self, request):
+        request.user.auth_token.delete()
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
