@@ -3,12 +3,14 @@ from .models import Answer, Question
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Question
         fields = "__all__"
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Answer
         fields = "__all__"
