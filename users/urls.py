@@ -7,5 +7,6 @@ from users import views
 
 urlpatterns = [
     path('register/', views.UserRegisterView.as_view()),
-    path('login/', obtain_auth_token, name="login")
+    path('login/', obtain_auth_token, name="login"),
+    path('logout/', views.UserLogoutView.as_view())
 ]    
