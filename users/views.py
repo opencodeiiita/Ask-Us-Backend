@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny
 from users.serializers import RegisterSerializer,UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework import status,authentication,permissions
+from rest_framework import status
 
 class UserRegisterView(CreateAPIView):
     permission_classes = [AllowAny]
