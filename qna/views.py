@@ -93,8 +93,7 @@ def answer_list(request, **kwargs):
         data = AnswerSerializer(Answer.objects.all().filter(question = _id), many=True).data
         return Response(data)
     elif request.method == 'POST':
-        ans=Answer(author=request.user)
-        request.data["question"]=_id
+        ans=Answer(author=request.user,question=Question.objects.get(id=_id))
         serializer = AnswerSerializer(ans,data=request.data)
         if serializer.is_valid():
             serializer.save()
