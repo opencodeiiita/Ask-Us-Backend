@@ -30,4 +30,4 @@ class UserLogoutView(APIView):
 class ListUsers(APIView):
     def get(self, request, format=None):
          user=UserSerializer(User.objects.all().filter(is_staff=False),many=True)
-         return Response(user.data,status=status.HTTP_201_CREATED)
+         return Response(user.data,status=status.HTTP_200_OKD)
