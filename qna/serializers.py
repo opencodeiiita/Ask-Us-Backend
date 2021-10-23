@@ -10,6 +10,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    question = serializers.ReadOnlyField(source='question.id')
     author = serializers.ReadOnlyField(source='author.username')
     class Meta:
         model = Answer
