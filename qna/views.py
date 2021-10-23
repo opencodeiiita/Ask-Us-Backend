@@ -1,7 +1,7 @@
 
 # Create your views here.
 from rest_framework import status
-from rest_framework.decorators import api_view,permission_classes
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from qna.models import Question, Answer
 from qna.serializers import QuestionSerializer, AnswerSerializer
@@ -37,7 +37,6 @@ def root(request):
         
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def question_list(request):
     if request.method == 'GET':
         questions = Question.objects.all()
@@ -53,7 +52,6 @@ def question_list(request):
 
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def question_detail(request, **kwargs):
     _id = kwargs.get("id")
     try:
@@ -86,7 +84,6 @@ def question_detail(request, **kwargs):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def answer_list(request, **kwargs):
     _id = kwargs.get("id")
     if request.method == 'GET':
@@ -104,7 +101,6 @@ def answer_list(request, **kwargs):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
-@permission_classes([IsAuthenticatedOrReadOnly])
 def answer_detail(request, **kwargs):
     _id = kwargs.get("aid")
     _qid = kwargs.get("qid")
