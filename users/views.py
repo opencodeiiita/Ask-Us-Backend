@@ -7,6 +7,10 @@ from users.serializers import RegisterSerializer,UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 
 class UserRegisterView(CreateAPIView):
     permission_classes = [AllowAny]
@@ -31,3 +35,13 @@ class ListUsers(APIView):
     def get(self, request, format=None):
          user=UserSerializer(User.objects.all().filter(is_staff=False),many=True)
          return Response(user.data,status=status.HTTP_200_OK)
+
+class ChangePassword(APIView):
+    def post(self,request):
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                user = form.save()
+                update_session_auth_hash(request, user)  
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('change_password')
+            return Response(status=status.HTTP_200_OK)
