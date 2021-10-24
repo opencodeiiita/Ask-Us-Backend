@@ -43,7 +43,45 @@ To set-up the development environment on your local machine, follow the below st
 - Other steps are same as in Windows.
 
 ---
+### Running Migrations 
+
+- Run the command:  `python manage.py makemigrations`.
+- Run the command:  `python manage.py makemigrations <app name>` when you want to create migrations for a particular app.
+- Run the command:  `python manage.py migrate` to apply migrations and create database tables.
+- Linux/macOS users,instead of using `python` in commands, use `python3`.
+
+### Creating a Super User for Admin Site
+
+- Create a user by running command:  `python manage.py createsuperuser`.
+- Enter desired username and email-address after that.
+- Enter a password for the the admin site.
+  To access the admin site, run the server, open a browser, and go to: `https://localhost:8000/admin/` and enter your username and password there.
+
 
 Once django is installed successfully and working, it's time to install the **django-REST framework**. This is the key tool for building the APIs. So, open the terminal (cmd on windows) and activate the virtual environment. Now install the REST framework with the following command: `pip install djangorestframework`
 
 Now you have the required tools to start contributing! Enjoy! :)
+
+---
+
+## HTTPie command line tool
+HTTPie is a command line tool used to interact with HTTP clients. It makes interacting  with the APIs easier as it can be used directly from your terminal. It can be used to test the API and has several methods like GET,POST,PUT and DELETE.
+One of the main advantages of using the HTTPie's command line interface is that it allows the user the ability to pass a Token as the Authentication Header which isn't possible in the browser interface.
+
+### Installation
+- Mac:     `pip install --upgrade httpie`
+- Windows: `pip install --upgrade pip setuptools`  
+           `pip install --upgrade httpie`
+- Linux:   `apt-get install httpie`
+
+### Usage
+- Get information from the server :  `http GET http://localhost:8000/` followed by the end point from where you want to get the information. 
+  eg.  ` http GET http://localhost:8000/question `
+- Get information for a query parameter by using param==value format in original request.
+  eg.  ` http http://localhost:8000/question/ id==1 ` (You can use multiple query parameters too)
+- Post information on the server :  `http POST http://localhost:8000/` followed by the end point where you want to post the information(You will have to specify all the required fields for the particular model )
+  eg. ` http POST http://localhost:8000/question/ title="Question1" desciption="This is the 1st question" `
+- Put information on the server :  `http PUT http://localhost:8000/` followed by the end point where you want to put the information
+  eg.` http PUT http://localhost:8000/question/2/ title="Question2" description="This is the 2nd question" `
+- Delete information from the server: `http DELETE http://localhost:8000/` followed by the end point fromwhere you want to delete the information
+  eg.` http DELETE http://localhost:8000/question/1/ `
