@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
+import django.contrib.auth.password_validation as validators
 
 
 class UserSerializer(ModelSerializer):
@@ -32,4 +33,5 @@ class RegisterSerializer(serializers.ModelSerializer):
         password2 = data['password2']
         if password != password2:
             raise serializers.ValidationError({'password':'passwords must match'})
+        validators.validate_password(password)
         return data
