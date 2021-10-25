@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
-from users.serializers import RegisterSerializer,UserSerializer
+from users.serializers import RegisterSerializer,UserSerializer,ChangePasswordSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
@@ -51,4 +51,4 @@ class ChangePasswordView(UpdateAPIView):
 
                 return Response(status= status.HTTP_200_OK, data = response)
 
-            return Response( status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
