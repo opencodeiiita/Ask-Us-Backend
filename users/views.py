@@ -44,7 +44,10 @@ class ChangePasswordView(UpdateAPIView):
                     return Response({"old_password": ["Wrong password."]}, status=status.HTTP_400_BAD_REQUEST)
                 self.object.set_password(serializer.data.get("new_password"))
                 self.object.save()
+                response = {
+                    'message': 'Password updated successfully',
+                }
 
-                return Response(status= status.HTTP_200_OK, message= 'Password updated successfully')
+                return Response(status= status.HTTP_200_OK, data = response)
 
             return Response( status=status.HTTP_400_BAD_REQUEST)
