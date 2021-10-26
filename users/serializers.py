@@ -35,3 +35,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'password':'passwords must match'})
         validators.validate_password(password)
         return data
+
+class ChangePasswordSerializer(ModelSerializer):
+    model = User
+    old_password = serializers.CharField(required = True,write_only = True)
+    new_password = serializers.CharField(required = True,write_only = True)
+    new_password_confirm = serializers.CharField(required = True,write_only = True)
+
+    def validate(self,data):
+        new_password = data['new_password']
+        new_password_confirm = data['new_password_confirm']
+        if new_password != new_password_confirm:
+            raise serializers.ValidationError({'password':'passwords must match'})
+        validators.validate_password(new_password)
+        return data
