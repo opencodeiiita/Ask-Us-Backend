@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', views.UserLogoutView.as_view()),
     path('view/', views.ListUsers.as_view()),
     path('change-password/', views.ChangePasswordView.as_view()),
-    path('<str:username>/questions/', views.ListQuestionsByUser.as_view())
+    path('<str:username>/questions/', views.ListQuestionsByUser.as_view()),
+    path('<str:username>/answers/', views.ListAnswersByUser.as_view())
 ]    
