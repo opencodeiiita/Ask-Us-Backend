@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', obtain_auth_token, name="login"),
     path('logout/', views.UserLogoutView.as_view()),
     path('view/', views.ListUsers.as_view()),
-    path('change-password/', views.ChangePasswordView.as_view())
+    path('change-password/', views.ChangePasswordView.as_view()),
+    path('<str:username>/questions/', views.ListQuestionsByUser.as_view())
 ]    
