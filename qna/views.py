@@ -115,7 +115,6 @@ def answer_detail(request, **kwargs):
         return Response({'response':"You don't have permission to do that"})
         
     if request.method == "PUT":
-        request.data["question"]=_qid
         ans_ser = AnswerSerializer(answer, data=request.data)
         if ans_ser.is_valid():
             ans_ser.save()
