@@ -8,6 +8,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import UpdateAPIView
+from qna.serializers import QuestionSerializer
+from qna.models import Question
 
 class UserRegisterView(CreateAPIView):
     permission_classes = [AllowAny]
@@ -48,7 +50,13 @@ class ChangePasswordView(UpdateAPIView):
                 response = {
                     'message': 'Password updated successfully',
                 }
-
                 return Response(status= status.HTTP_200_OK, data = response)
-
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ListQuestionsByUser(APIView):
+    def get(self, request, *args, **kwargs):
+        _username= kwargs.get("username")
+        user=User.objects.get(username=_username)
+        _id=user.id
+        data = QuestionSerializer(Question.objects.all().filter(author=_id), many=True).data
+        return Response(data,status=status.HTTP_200_OK)
