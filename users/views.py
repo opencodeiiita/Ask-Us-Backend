@@ -10,6 +10,8 @@ from rest_framework import status
 from rest_framework.generics import UpdateAPIView
 from qna.serializers import QuestionSerializer
 from qna.models import Question
+from qna.serializers import AnswerSerializer
+from qna.models import Answer
 
 class UserRegisterView(CreateAPIView):
     permission_classes = [AllowAny]
@@ -59,4 +61,12 @@ class ListQuestionsByUser(APIView):
         user=User.objects.get(username=_username)
         _id=user.id
         data = QuestionSerializer(Question.objects.all().filter(author=_id), many=True).data
+        return Response(data,status=status.HTTP_200_OK)
+
+class ListAnswersByUser(APIView):
+    def get(self, request, *args, **kwargs):
+        _username= kwargs.get("username")
+        user=User.objects.get(username=_username)
+        _id=user.id
+        data = AnswerSerializer(Answer.objects.all().filter(author=_id), many=True).data
         return Response(data,status=status.HTTP_200_OK)
