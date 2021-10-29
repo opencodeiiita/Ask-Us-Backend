@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from qna.models import Question, Answer
 from qna.serializers import QuestionSerializer, AnswerSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListAPIView
 
 @api_view(['GET'])
 def root(request):
@@ -57,9 +57,9 @@ def question_create(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class QuestionList(ListCreateAPIView):
-    serializer_class=QuestionSerializer;
-    queryset=Question.objects.all();
+class QuestionList(ListAPIView):
+    serializer_class=QuestionSerializer
+    queryset=Question.objects.all()
     def list(self, request):
         queryset = self.get_queryset()
         serializer = QuestionSerializer(queryset, many=True).data
@@ -111,9 +111,9 @@ def answer_create(request, **kwargs):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
  
-class AnswerList(ListCreateAPIView):
-    queryset=Answer.objects.all();
-    serializer_class=AnswerSerializer;
+class AnswerList(ListAPIView):
+    queryset=Answer.objects.all()
+    serializer_class=AnswerSerializer
     def list(self, request, *args, **kwargs):
         _id=kwargs.get("id")
         queryset=self.get_queryset()
