@@ -22,5 +22,7 @@ urlpatterns = [
     path('<int:id>/', views.question_detail),
     path('new/', views.question_create),
     path('<int:id>/answer/new/', views.answer_create),
-    path('<int:qid>/answer/<int:aid>/', views.answer_detail)
+    path('<int:qid>/answer/<int:aid>/', views.answer_detail),
+    path('all/',views.QuestionList.as_view()),
+    path('<int:id>/answer/all/',views.AnswerList.as_view())
 ]

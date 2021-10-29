@@ -6,10 +6,16 @@ from rest_framework.response import Response
 from qna.models import Question, Answer
 from qna.serializers import QuestionSerializer, AnswerSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.generics import ListAPIView
 
 @api_view(['GET'])
 def root(request):
     endpoints = [
+        {
+        "request": "GET",
+        "url": "question/all/",
+        "description": "Retrieves all question"
+        },
         {
         "request": "POST",
         "url": "question/new/",
@@ -19,6 +25,11 @@ def root(request):
         "request": "GET,PUT,DELETE",
         "url": "question/{qid}",
         "description": "Get, edit ,delete a question with its id"
+        },
+        {
+        "request": "GET",
+        "url": "question/{qid}/answer/all/",
+        "description": "Retrieves all answers for a question with its id"
         },
         {
         "request": "POST",
@@ -46,6 +57,13 @@ def question_create(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class QuestionList(ListAPIView):
+    serializer_class=QuestionSerializer
+    queryset=Question.objects.all()
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = QuestionSerializer(queryset, many=True).data
+        return Response(serializer)
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def question_detail(request, **kwargs):
@@ -92,6 +110,15 @@ def answer_create(request, **kwargs):
             question.save() 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+ 
+class AnswerList(ListAPIView):
+    queryset=Answer.objects.all()
+    serializer_class=AnswerSerializer
+    def list(self, request, *args, **kwargs):
+        _id=kwargs.get("id")
+        queryset=self.get_queryset()
+        serializer = AnswerSerializer(queryset.filter(question=_id), many=True).data
+        return Response(serializer)
         
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def answer_detail(request, **kwargs):
