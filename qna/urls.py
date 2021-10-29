@@ -20,7 +20,7 @@ from qna import views
 
 urlpatterns = [
     path('<int:id>/', views.question_detail),
-    path('/new/', views.question_create),
+    path('new/', views.question_create),
     path('<int:id>/answer/new/', views.answer_create),
     path('<int:qid>/answer/<int:aid>/', views.answer_detail)
 ]
