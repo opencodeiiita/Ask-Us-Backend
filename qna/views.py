@@ -11,9 +11,9 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 def root(request):
     endpoints = [
         {
-        "request": "GET,POST",
-        "url": "question/",
-        "description": "Retrive all questions, post a question"
+        "request": "POST",
+        "url": "question/new/",
+        "description": "Post a question"
         },
         {
         "request": "GET,PUT,DELETE",
@@ -21,9 +21,9 @@ def root(request):
         "description": "Get, edit ,delete a question with its id"
         },
         {
-        "request": "GET,POST",
-        "url": "question/{qid}/answer",
-        "description": "Get, post answer for a question with its id"
+        "request": "POST",
+        "url": "question/{qid}/answer/new/",
+        "description": "Post answer for a question with its id"
         },
         {
         "request": "GET,PUT,DELETE",
@@ -36,13 +36,9 @@ def root(request):
         
         
 
-@api_view(['GET', 'POST'])
-def question_list(request):
-    if request.method == 'GET':
-        questions = Question.objects.all()
-        serializer = QuestionSerializer(questions, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
+@api_view(['POST'])
+def question_create(request):
+    if request.method == 'POST':
         question=Question(author=request.user)
         serializer = QuestionSerializer(question,data=request.data)
         if serializer.is_valid():
@@ -83,13 +79,10 @@ def question_detail(request, **kwargs):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'POST'])
-def answer_list(request, **kwargs):
+@api_view(['POST'])
+def answer_create(request, **kwargs):
     _id = kwargs.get("id")
-    if request.method == 'GET':
-        data = AnswerSerializer(Answer.objects.all().filter(question = _id), many=True).data
-        return Response(data)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         ans=Answer(author=request.user,question=Question.objects.get(id=_id))
         serializer = AnswerSerializer(ans,data=request.data)
         if serializer.is_valid():
