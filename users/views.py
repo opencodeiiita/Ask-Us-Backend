@@ -60,7 +60,7 @@ class ListQuestionsByUser(APIView):
         _username= kwargs.get("username")
         user=User.objects.get(username=_username)
         _id=user.id
-        data = QuestionSerializer(Question.objects.all().filter(author=_id), many=True).data
+        data = QuestionSerializer(Question.objects.all().filter(author=_id).order_by('-date_posted'), many=True).data
         return Response(data,status=status.HTTP_200_OK)
 
 class ListAnswersByUser(APIView):
@@ -68,5 +68,5 @@ class ListAnswersByUser(APIView):
         _username= kwargs.get("username")
         user=User.objects.get(username=_username)
         _id=user.id
-        data = AnswerSerializer(Answer.objects.all().filter(author=_id), many=True).data
+        data = AnswerSerializer(Answer.objects.all().filter(author=_id).order_by('-date_posted'), many=True).data
         return Response(data,status=status.HTTP_200_OK)

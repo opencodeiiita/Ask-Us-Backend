@@ -1,4 +1,3 @@
-
 # Create your views here.
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -59,7 +58,7 @@ def question_create(request):
 
 class QuestionList(ListAPIView):
     serializer_class=QuestionSerializer
-    queryset=Question.objects.all()
+    queryset=Question.objects.all().order_by('-date_posted')
     def list(self, request):
         queryset = self.get_queryset()
         serializer = QuestionSerializer(queryset, many=True).data
@@ -106,13 +105,13 @@ def answer_create(request, **kwargs):
         if serializer.is_valid():
             serializer.save()
             question = Question.objects.get(id=_id)
-            question.no_of_answers += 1  
-            question.save() 
+            question.no_of_answers += 1
+            question.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
  
 class AnswerList(ListAPIView):
-    queryset=Answer.objects.all()
+    queryset=Answer.objects.all().order_by('-date_posted')
     serializer_class=AnswerSerializer
     def list(self, request, *args, **kwargs):
         _id=kwargs.get("id")
@@ -150,5 +149,3 @@ def answer_detail(request, **kwargs):
     elif request.method == "DELETE":
         answer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
