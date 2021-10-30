@@ -51,7 +51,7 @@ def root(request):
         "description": "Logs in a user"
         },
         {
-        "request": "POST",
+        "request": "GET",
         "url": "users/logout/",
         "description": "Logs out a user"
         },
@@ -63,7 +63,7 @@ def root(request):
         {
         "request": "PUT",
         "url": "users/change-password/",
-        "description": "Post answer for a question with its id"
+        "description": "Changes the Password for a User"
         },
         {
         "request": "GET",
