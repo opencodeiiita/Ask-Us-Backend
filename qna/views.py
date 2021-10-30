@@ -40,6 +40,46 @@ def root(request):
         "url": "question/{qid}/answer/{aid}",
         "description": "Get, edit ,delete answer with its id for a question with its id"
         },
+        {
+        "request": "POST",
+        "url": "users/register/",
+        "description": "Registers a User"
+        },
+        {
+        "request": "POST",
+        "url": "users/login/",
+        "description": "Logs in a user"
+        },
+        {
+        "request": "GET",
+        "url": "users/logout/",
+        "description": "Logs out a user"
+        },
+        {
+        "request": "GET",
+        "url": "users/view/",
+        "description": "Lists all users that don't have staff-level permissions"
+        },
+        {
+        "request": "PUT",
+        "url": "users/change-password/",
+        "description": "Changes the Password for a User"
+        },
+        {
+        "request": "GET",
+        "url": "users/{username}/questions/",
+        "description": "Retrieves all questions posted by a User"
+        },
+        {
+        "request": "GET",
+        "url": "users/{username}/answers/",
+        "description": "Retrieves all answers posted by a User"
+        },
+        {
+        "request": "PUT,PATCH",
+        "url": "users/{username}/update/",
+        "description": "Updates the information of a user"
+        }
     ]
     return Response(endpoints,status=status.HTTP_200_OK)
         
