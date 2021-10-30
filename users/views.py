@@ -70,3 +70,23 @@ class ListAnswersByUser(APIView):
         _id=user.id
         data = AnswerSerializer(Answer.objects.all().filter(author=_id).order_by('-date_posted'), many=True).data
         return Response(data,status=status.HTTP_200_OK)
+
+class UserUpdateView(UpdateAPIView):
+    def put(self, request, *args, kwargs):
+        _username= kwargs.get("username")
+        user=User.objects.get(username=_username)
+        data = request.data
+        user_serializer = UserSerializer(user, data=data)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data, status=status.HTTP_200_OK)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self, request, *args, kwargs):
+        _username= kwargs.get("username")
+        user=User.objects.get(username=_username)
+        data = request.data
+        user_serializer = UserSerializer(user, data=data, partial=True)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response(user_serializer.data,status=status.HTTP_200_OK)
+        return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
