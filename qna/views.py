@@ -99,7 +99,6 @@ def question_create(request):
 class QuestionList(ListAPIView):
     serializer_class=QuestionSerializer
     queryset=Question.objects.all().order_by('-date_posted')
-    serializer = QuestionSerializer(queryset, many=True).data
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def question_detail(request, **kwargs):
