@@ -12,6 +12,7 @@ from qna.serializers import QuestionSerializer
 from qna.models import Question
 from qna.serializers import AnswerSerializer
 from qna.models import Answer
+from rest_framework.pagination import PageNumberPagination
 
 class UserRegisterView(CreateAPIView):
     permission_classes = [AllowAny]
@@ -60,7 +61,9 @@ class ListQuestionsByUser(APIView):
         _username= kwargs.get("username")
         user=User.objects.get(username=_username)
         _id=user.id
-        data = QuestionSerializer(Question.objects.all().filter(author=_id).order_by('-date_posted'), many=True).data
+        paginator = PageNumberPagination()
+        question = paginator.paginate_queryset(Question.objects.all().filter(author=_id).order_by('-date_posted'),request)
+        data = QuestionSerializer(question, many=True, context={'request':request}).data
         return Response(data,status=status.HTTP_200_OK)
 
 class ListAnswersByUser(APIView):
@@ -68,7 +71,9 @@ class ListAnswersByUser(APIView):
         _username= kwargs.get("username")
         user=User.objects.get(username=_username)
         _id=user.id
-        data = AnswerSerializer(Answer.objects.all().filter(author=_id).order_by('-date_posted'), many=True).data
+        paginator = PageNumberPagination()
+        answer = paginator.paginate_queryset(Answer.objects.all().filter(author=_id).order_by('-date_posted'),request)
+        data = AnswerSerializer(answer, many=True).data
         return Response(data,status=status.HTTP_200_OK)
 
 class UserUpdateView(UpdateAPIView):

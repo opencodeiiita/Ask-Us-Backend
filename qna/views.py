@@ -6,7 +6,7 @@ from qna.models import Question, Answer
 from qna.serializers import QuestionSerializer, AnswerSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView
-
+from rest_framework.pagination import PageNumberPagination
 @api_view(['GET'])
 def root(request):
     endpoints = [
@@ -99,10 +99,6 @@ def question_create(request):
 class QuestionList(ListAPIView):
     serializer_class=QuestionSerializer
     queryset=Question.objects.all().order_by('-date_posted')
-    def list(self, request):
-        queryset = self.get_queryset()
-        serializer = QuestionSerializer(queryset, many=True).data
-        return Response(serializer)
 
 @api_view(['GET', 'PUT', 'PATCH', 'DELETE'])
 def question_detail(request, **kwargs):
@@ -151,13 +147,15 @@ def answer_create(request, **kwargs):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
  
 class AnswerList(ListAPIView):
-    queryset=Answer.objects.all().order_by('-date_posted')
     serializer_class=AnswerSerializer
+    queryset=Answer.objects.all().order_by('-date_posted')
     def list(self, request, *args, **kwargs):
         _id=kwargs.get("id")
-        queryset=self.get_queryset()
-        serializer = AnswerSerializer(queryset.filter(question=_id), many=True).data
-        return Response(serializer)
+        answer=self.get_queryset()
+        paginator = PageNumberPagination()
+        result_page = paginator.paginate_queryset(answer.filter(question=_id),request)
+        serializer = AnswerSerializer(result_page, many=True)
+        return Response(serializer.data)
         
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def answer_detail(request, **kwargs):
