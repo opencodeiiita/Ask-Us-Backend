@@ -73,5 +73,5 @@ class ListAnswersByUser(APIView):
         _id=user.id
         paginator = PageNumberPagination()
         answer = paginator.paginate_queryset(Answer.objects.all().filter(author=_id).order_by('-date_posted'),request)
-        data = AnswerSerializer(answer, many=True, context={'request':request}).data
+        data = AnswerSerializer(answer, many=True).data
         return Response(data,status=status.HTTP_200_OK)
