@@ -154,8 +154,8 @@ class AnswerList(ListAPIView):
         answer=self.get_queryset()
         paginator = PageNumberPagination()
         result_page = paginator.paginate_queryset(answer.filter(question=_id),request)
-        serializer = AnswerSerializer(result_page, many=True).data
-        return Response(serializer)
+        serializer = AnswerSerializer(result_page, many=True)
+        return Response(serializer.data)
         
 @api_view(['GET', 'PUT', 'DELETE', 'PATCH'])
 def answer_detail(request, **kwargs):
