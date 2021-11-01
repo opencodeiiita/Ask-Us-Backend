@@ -97,7 +97,7 @@ class UserUpdateView(UpdateAPIView):
             return Response(user_serializer.data,status=status.HTTP_200_OK)
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class UploadProfilePic(UpdateAPIView):
+class UploadProfilePic(APIView):
     def put(self, request, *args, **kwargs):
         _username= kwargs.get("username")
         data=request.data
