@@ -3,6 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 import django.contrib.auth.password_validation as validators
+from .models import Profile
 
 
 class UserSerializer(ModelSerializer):
@@ -10,7 +11,7 @@ class UserSerializer(ModelSerializer):
         model = User
         fields = ("id", "username", "email", "first_name", "last_name")
 
-class RegisterSerializer(serializers.ModelSerializer):
+class RegisterSerializer(ModelSerializer):
     email = serializers.EmailField(required = True,validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(required = True,write_only = True)
     password2 = serializers.CharField(required = True,write_only = True)
@@ -49,3 +50,8 @@ class ChangePasswordSerializer(ModelSerializer):
             raise serializers.ValidationError({'password':'passwords must match'})
         validators.validate_password(new_password)
         return data
+        
+class ProfileSerializer(ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['profile_img']
