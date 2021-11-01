@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
-from users.serializers import RegisterSerializer,UserSerializer,ChangePasswordSerializer
+from users.serializers import RegisterSerializer,UserSerializer,ChangePasswordSerializer,ProfileSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,6 +12,7 @@ from qna.serializers import QuestionSerializer
 from qna.models import Question
 from qna.serializers import AnswerSerializer
 from qna.models import Answer
+from .models import Profile
 from rest_framework.pagination import PageNumberPagination
 
 class UserRegisterView(CreateAPIView):
@@ -77,7 +78,7 @@ class ListAnswersByUser(APIView):
         return Response(data,status=status.HTTP_200_OK)
 
 class UserUpdateView(UpdateAPIView):
-    def put(self, request, *args, kwargs):
+    def put(self, request, *args, **kwargs):
         _username= kwargs.get("username")
         user=User.objects.get(username=_username)
         data = request.data
@@ -95,3 +96,17 @@ class UserUpdateView(UpdateAPIView):
             user_serializer.save()
             return Response(user_serializer.data,status=status.HTTP_200_OK)
         return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class UploadProfilePic(APIView):
+    def put(self, request, *args, **kwargs):
+        _username= kwargs.get("username")
+        data=request.data
+        profile=Profile.objects.get(user__username=_username)
+        profile_serializer=ProfileSerializer(profile,data=data)
+        if(_username!=request.user.username):
+            return Response({'message':'Permission Denied'},status=status.HTTP_400_BAD_REQUEST)
+        if profile_serializer.is_valid():
+            profile_serializer.save()
+            return Response(profile_serializer.data,status=status.HTTP_200_OK)
+        return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
