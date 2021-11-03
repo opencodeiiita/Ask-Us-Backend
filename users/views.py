@@ -110,3 +110,12 @@ class UploadProfilePic(APIView):
             return Response(profile_serializer.data,status=status.HTTP_200_OK)
         return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+class GetUserProfile(APIView):
+    def get(self, request, *args, **kwargs):
+        _username= kwargs.get("username")
+        profile=ProfileSerializer(Profile.objects.get(user__username=_username))
+        return Response(profile.data,status=status.HTTP_200_OK)
+        
+         
+
+        
