@@ -79,7 +79,18 @@ def root(request):
         "request": "PUT,PATCH",
         "url": "users/{username}/update/",
         "description": "Updates the information of a user"
+        },
+        {
+        "request": "PUT",
+        "url": "users/{username}/profile_pic/upload/",
+        "description": "Allows the user to upload a Profile Picture"
+        },
+        {
+        "request": "GET",
+        "url": "users/{username}/view_profile_pic/",
+        "description": "Allows Users to view the profile picture of a particular User."
         }
+        
     ]
     return Response(endpoints,status=status.HTTP_200_OK)
         
